@@ -1,0 +1,298 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "The XIN Backend/Service API",
+    "description": "
+      The XIN backend API allows interaction with XIN backends using HTTP or HTTPS requests on different ports to fetch
+      data, used by the client or frontends like the peerexplorer. Most HTTP requests can use either the GET or POST
+      methods, but some API calls accept only the POST method for security reasons. Responses are returned as JSON objects.
+      This is an API designed for developers who are using XIN to build new services, features and integrations.
+      It is recommended to use the testnet for development. Users and developers are free to run their own backends
+      to improve 'service/backend decentralization'. This API doc contains get/fetching endpoints only. Please see the
+      upcoming sourcecode release for additional admin endpoints. More backends/services are in active development like
+      a newsserver a faucet service and a quoteserver. Stay tuned.
+
+      <p>
+
+      <strong> Backend Ports: </strong> <br>
+      Peer Explorer: 8888<br>
+      Market Cap.: 8892 <br>
+
+      <p>
+      Peer Backend IP: 185.103.75.217:8888/api/ <br>
+      Macap Backend IP: 185.103.75.217:8892/api/v1/ <br>
+
+      <p>
+      <strong> Peer Monitor: </strong> <br>
+      http://www.infinity-economics.org/monitor/ <p>
+
+      <strong> Mainet server: </strong> <br>
+      http://infinity-economics.org/peer <p>
+
+      <strong> Testnet server: </strong> <br>
+      http://testnet.infinity-economics.org/peer <p>
+
+      <strong> Download section: </strong> <br>
+      http://www.infinity-economics.org/download/
+
+      <p>
+      <strong> API stage: </strong> <br>
+      Peer review
+
+      <br>
+    ",
+    "contact": {
+
+    }
+  },
+  "host": "185.103.75.217",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+
+  "paths": {
+
+  "/nodes": {
+    "get": {
+      "summary": "Get node data",
+      "description": "This endpoint serves node data to users, and is filterable and sortable on a number of parameters with pagination enabled.<br>
+
+      curl
+      'http://185.35.137.7:8888/api/nodes'
+      ",
+      "tags": [
+        "Peer"
+      ],
+      "parameters": [
+          {
+            "name": "page",
+            "description": "Page number to be returned",
+            "in": "query",
+            "type": "number",
+            "required": false
+          },
+          {
+            "name": "results",
+            "description": "Number of results to be returned per page",
+            "in": "query",
+            "type": "number",
+            "required": false
+          },
+          {
+            "name": "filter",
+            "description": "Field by which to apply ascending or descending sort",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "order",
+            "description": "Results sort order. Either asc or desc",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "service",
+            "description": "Comma separated list of services to search nodes by",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "collectionFormat": "csv"
+          },
+          {
+            "name": "ip",
+            "description": "IP address to seach by. Will return a single node",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Array of nodes matching search parameters",
+
+          },
+          "default": {
+            "description": "Unexpected error",
+
+          }
+       }
+    }
+  }
+  ,
+  "/history": {
+    "get": {
+      "summary": "Get performance history for specific node",
+      "description": "This endpoint returns the performance history for a specified node ordered by most recent performance stat. 10 results returned by default.<br>
+
+      curl
+      'http://185.35.137.7:8888/api/history?ip=208.95.1.177'
+      ",
+      "tags": [
+        "Peer"
+      ],
+      "parameters": [
+          {
+            "name": "ip",
+            "description": "IP address of node",
+            "in": "query",
+            "type": "number",
+            "required": true
+          },
+          {
+            "name": "results",
+            "description": "Number of results to return",
+            "in": "query",
+            "type": "number",
+            "required": false
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Array of nodes matching search parameters",
+
+          },
+          "default": {
+            "description": "Unexpected error",
+
+          }
+       }
+    }
+  }
+  ,
+  "/getStats": {
+    "get": {
+      "summary": "Get aggregated stats for nodes",
+      "description": "This endpoint returns the latest aggregated stats for all nodes in the database.<br>
+
+      curl
+      'http://185.35.137.7:8888/api/getStats'
+      ",
+      "tags": [
+        "Peer"
+      ],
+
+        "responses": {
+          "200": {
+            "description": "Array of nodes matching search parameters",
+
+          },
+          "default": {
+            "description": "Unexpected error",
+
+          }
+       }
+    }
+  }
+  ,
+  "/geoData": {
+    "get": {
+      "summary": "Get aggregated geodata counts",
+      "description": "This endpoint returns an aggregated count of geodata by field. Defaults to counts by country_name.<br>
+
+      curl
+      'http://185.35.137.7:8888/api/geoData'
+      ",
+      "tags": [
+        "Peer"
+      ],
+      "parameters": [
+         {
+           "name": "field",
+           "in": "query",
+           "description": "Field by which to aggregate node geodata. Defaults to country_name",
+           "required": false,
+           "type": "string"
+         }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Array of nodes matching search parameters",
+
+          },
+          "default": {
+            "description": "Unexpected error",
+
+          }
+       }
+    }
+  }
+  ,
+
+
+  "/get": {
+    "get": {
+      "summary": "Gets latest market capitalizations from database",
+      "description": "This endpoint retrieves the most recently stored cryptocurrency market capitalizations.
+      It is possible to filter and sort by all keys. Default sort order is ``ascending``.
+      Shorthand keys are ``24h`` for ``percent_change_24h`` and ``7d`` for ``percent_change_7d``.<br>
+
+      curl
+      'http://185.103.75.217:8892/api/v1/get'
+      ",
+      "tags": [
+        "MaCap"
+      ],
+      "parameters": [
+        {
+          "name": "page",
+          "description": "Page number to be returned",
+          "in": "query",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "results",
+          "description": "Number of results to be returned per page",
+          "in": "query",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "filter",
+          "description": "Field by which to apply ascending or descending sort. Defaults ``rank``.",
+          "in": "query",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "order",
+          "description": "Results sort order. Either ``asc`` or ``desc``. Defaults to ``desc`` for percent changes and ``asc`` otherwise.",
+          "in": "query",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "name",
+          "description": "Name to seach by. Will return a single currency.",
+          "in": "query",
+          "type": "string",
+          "required": false
+        }
+      ],
+
+        "responses": {
+          "200": {
+            "description": "Array of nodes matching search parameters",
+
+          },
+          "default": {
+            "description": "Unexpected error",
+
+          }
+       }
+    }
+  }
+  ,
+
+  }
+}
