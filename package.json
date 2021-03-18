@@ -1,5 +1,5 @@
 {
-  "name": "The-XIN-Backend-API",
+  "name": "iep-backend-api",
   "version": "0.1.0",
   "description": "Examples of XIN API calls base path is /api (/v1)",
   "main": "index.js",
