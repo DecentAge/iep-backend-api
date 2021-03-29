@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t iep-backend-api .
+docker build -t decentage/iep-backend-api:latest .
