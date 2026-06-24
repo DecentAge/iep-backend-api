@@ -1,3 +1,13 @@
+# Changelog
+
+## [Unreleased]
+
+## [0.4.1] - 2026-06-24
+### Changed
+- Ported the backend API off swagger-tools to Express; Node 22; reproducible npm ci builds.
+
+## [0.3.x and earlier]
+
 # Release 0.3.1
 - dockerized project
 - upgrade dependencies
