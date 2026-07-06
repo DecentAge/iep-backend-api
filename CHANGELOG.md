@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-## [0.4.1] - 2026-06-24
+## [0.4.1] - 2026-07-06
 ### Changed
 - Ported the backend API off swagger-tools to Express; Node 22; reproducible npm ci builds.
 
